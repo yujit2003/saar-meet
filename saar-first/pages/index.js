@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation'
 
 import styles from '@/styles/home.module.css'
 import { useState } from 'react';
+import { UserButton } from '@clerk/nextjs';
 
 export default function Home() {
   const router = useRouter()
@@ -20,6 +21,12 @@ export default function Home() {
     }
   }
   return (
+    <div>
+    <header className="flex justify-end bg-gray-400 p-2">
+      <div className=""> 
+      <UserButton/>
+      </div>
+    </header>
     <div className={styles.homeContainer}>
         <h1>Google Meet Clone</h1>
         <div className={styles.enterRoom}>
@@ -28,6 +35,7 @@ export default function Home() {
         </div>
         <span  className={styles.separatorText} >--------------- OR ---------------</span>
         <button onClick={createAndJoin}>Create a new room</button>
+    </div>
     </div>
   )
 }
