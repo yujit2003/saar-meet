@@ -1,0 +1,32 @@
+.copyContainer {
+  @apply fixed bottom-10 left-10 text-gray-100 bg-gray-950 border border-gray-300 rounded-lg p-4 text-gray-800;
+
+  .copyHeading {
+    @apply text-lg font-semibold mb-2 text-gray-200;
+  }
+
+  .copyDescription {
+    @apply flex items-center text-sm text-gray-200 gap-3;
+  }
+
+  hr {
+    @apply my-1 border-gray-300;
+  }
+}
+
+/* .copyContainer {
+  @apply flex flex-col absolute text-white border border-white rounded p-2;
+  left: 30px;
+  bottom: 100px;
+
+  hr {
+    @apply my-1;
+  }
+  .copyHeading {
+    @apply text-base;
+  }
+
+  .copyDescription {
+    @apply flex items-center text-sm;
+  }
+} */
