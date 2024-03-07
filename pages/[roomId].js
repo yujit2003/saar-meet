@@ -174,6 +174,8 @@ const Room = () => {
         toggleAudio={toggleAudio}
         toggleVideo={toggleVideo}
         leaveRoom={leaveRoom}
+        playerId = {myId}
+        roomId = {roomId}
       />
     </>
 
