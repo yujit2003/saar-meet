@@ -1,6 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/navigation'
-
+import '@babel/polyfill';
+import 'regenerator-runtime/runtime'
+import 'core-js/stable'
 import styles from '@/styles/home.module.css'
 import { useState } from 'react';
 import { UserButton } from '@clerk/nextjs';

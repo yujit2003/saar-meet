@@ -1,21 +1,36 @@
-import cx from "classnames";
-import { Mic, Video, PhoneOff, MicOff, VideoOff } from "lucide-react";
+import { useEffect, useState } from 'react'
+import cx from 'classnames'
+import { Mic, Video, PhoneOff, MicOff, VideoOff } from 'lucide-react'
 
-import styles from "@/component/Bottom/index.module.css";
+import styles from '@/component/Bottom/index.module.css'
 
 const Bottom = (props) => {
-  const { muted, playing, toggleAudio, toggleVideo, leaveRoom } = props;
+  const {
+    muted,
+    playing,
+    toggleAudio,
+    toggleVideo,
+    leaveRoom,
+    SpeechRecognition,
+    startListening
+  } = props
+
+  
 
   return (
     <div className={styles.bottomMenu}>
       {muted ? (
-        <MicOff
-          className={cx(styles.icon, styles.active)}
-          size={55}
-          onClick={toggleAudio}
-        />
+        <button onClick={startListening}>
+          <MicOff
+            className={cx(styles.icon, styles.active)}
+            size={55}
+            onClick={toggleAudio}
+          />
+        </button>
       ) : (
-        <Mic className={styles.icon} size={55} onClick={toggleAudio} />
+        <button onClick={SpeechRecognition.stopListening}>
+          <Mic className={styles.icon} size={55} onClick={toggleAudio} />
+        </button>
       )}
       {playing ? (
         <Video className={styles.icon} size={55} onClick={toggleVideo} />
@@ -26,9 +41,9 @@ const Bottom = (props) => {
           onClick={toggleVideo}
         />
       )}
-      <PhoneOff size={55} className={cx(styles.icon)} onClick={leaveRoom}/>
+      <PhoneOff size={55} className={cx(styles.icon)} onClick={leaveRoom} />
     </div>
-  );
-};
+  )
+}
 
-export default Bottom;
+export default Bottom

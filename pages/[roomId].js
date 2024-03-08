@@ -5,6 +5,9 @@ import { useSocket } from "@/context/socket";
 import usePeer from "@/hooks/usePeer";
 import useMediaStream from "@/hooks/useMediaStream";
 import usePlayer from "@/hooks/usePlayer";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from 'react-speech-recognition'
 
 import Player from "@/component/Player";
 import Bottom from "@/component/Bottom";
@@ -18,6 +21,31 @@ const Room = () => {
   const { roomId } = useRouter().query;
   const { peer, myId } = usePeer();
   const { stream } = useMediaStream();
+  const startListening = () =>
+      SpeechRecognition.startListening({ continuous: true, language: 'en-IN' })
+
+  const {
+    transcript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition()
+
+  useEffect(() => {
+    console.log(transcripts)
+
+    // Update the transcripts state
+    setTranscripts((prevTranscripts) => ({
+      ...prevTranscripts,
+      [roomId]: {
+        ...prevTranscripts[roomId],
+        [myId]: transcript,
+      },
+    }))
+  }, [transcript, myId, roomId])
+
+  if (!browserSupportsSpeechRecognition) {
+    return null
+  }
+
   const {
     players,
     setPlayers,
@@ -29,6 +57,7 @@ const Room = () => {
   } = usePlayer(myId, roomId, peer);
 
   const [users, setUsers] = useState([])
+  const [transcripts, setTranscripts] = useState({})
 
   useEffect(() => {
     if (!socket || !peer || !stream) return;
@@ -174,6 +203,10 @@ const Room = () => {
         toggleAudio={toggleAudio}
         toggleVideo={toggleVideo}
         leaveRoom={leaveRoom}
+        playerId = {myId}
+        roomId = {roomId}
+        SpeechRecognition = {SpeechRecognition}
+        startListening = {startListening}
       />
     </>
 
