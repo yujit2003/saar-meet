@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react'
 import cx from 'classnames'
 import { Mic, Video, PhoneOff, MicOff, VideoOff } from 'lucide-react'
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from 'react-speech-recognition'
 
 import styles from '@/component/Bottom/index.module.css'
 
@@ -14,36 +11,11 @@ const Bottom = (props) => {
     toggleAudio,
     toggleVideo,
     leaveRoom,
-    playerId,
-    roomId,
+    SpeechRecognition,
+    startListening
   } = props
 
-  const [transcripts, setTranscripts] = useState({})
-
-  const startListening = () =>
-    SpeechRecognition.startListening({ continuous: true, language: 'en-IN' })
-
-  const {
-    transcript,
-    browserSupportsSpeechRecognition,
-  } = useSpeechRecognition()
-
-  useEffect(() => {
-    console.log(transcripts)
-
-    // Update the transcripts state
-    setTranscripts((prevTranscripts) => ({
-      ...prevTranscripts,
-      [roomId]: {
-        ...prevTranscripts[roomId],
-        [playerId]: transcript,
-      },
-    }))
-  }, [transcript, playerId, roomId])
-
-  if (!browserSupportsSpeechRecognition) {
-    return null
-  }
+  
 
   return (
     <div className={styles.bottomMenu}>

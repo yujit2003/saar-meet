@@ -23,7 +23,8 @@ export const SocketProvider = (props) => {
     await fetch('/api/socket')
   })
 
+
   return (
-    <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
+    <SocketContext.Provider value={socket} >{children}</SocketContext.Provider>
   );
 };
