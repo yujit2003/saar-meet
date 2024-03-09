@@ -22,6 +22,13 @@ export default function Home() {
       alert("Please provide a valid room id")
     }
   }
+
+  const mangoo=()=>{
+    router.push('/mangoo')
+  }
+
+
+
   return (
     <div>
       <div className='bg-blue-100 min-h-screen'>
@@ -50,6 +57,10 @@ export default function Home() {
                   </button>
                   <button onClick={createAndJoin} className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg mt-5">
                     Create a New Room
+                  </button>
+
+                  <button onClick={mangoo} className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg mt-5">
+                    mangoooooooooooo
                   </button>
                 </div>
                 <img src="/homePageImg.png" alt="" width='500' />
