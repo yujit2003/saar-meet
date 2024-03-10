@@ -16,6 +16,9 @@ import CopySection from "@/component/CopySection";
 import styles from "@/styles/room.module.css";
 import { useRouter } from "next/router";
 
+// Import MongoDB API
+import { saveConversation } from "@/pages/api/saveData"; // Update with your MongoDB API file path
+
 const Room = () => {
   const socket = useSocket();
   const { roomId } = useRouter().query;
@@ -30,17 +33,14 @@ const Room = () => {
   } = useSpeechRecognition()
 
   useEffect(() => {
-    console.log(transcripts)
-
-    // Update the transcripts state
+    if (!transcript || !myId) return;
+  
+    console.log(transcripts);
     setTranscripts((prevTranscripts) => ({
       ...prevTranscripts,
-      [roomId]: {
-        ...prevTranscripts[roomId],
-        [myId]: transcript,
-      },
-    }))
-  }, [transcript, myId, roomId])
+      [myId]: transcript,
+    }));
+  }, [transcript, myId]);
 
   if (!browserSupportsSpeechRecognition) {
     return null
@@ -58,6 +58,26 @@ const Room = () => {
 
   const [users, setUsers] = useState([])
   const [transcripts, setTranscripts] = useState({})
+  const [mute, setMute] = useState(false);
+
+  // Saving data in MongoDB
+  const handleSaveData = async () => {
+    try {
+      const response = await saveConversation(roomId, transcripts);
+      console.log(response); // Log response for debugging or handling success
+    } catch (error) {
+      console.error(error);
+      // Handle error
+    }
+  };
+
+  useEffect(() => {
+    if(!mute){
+      return;
+    }
+    // handleSaveData();
+    setMute(false)
+  }, [mute])
 
   useEffect(() => {
     if (!socket || !peer || !stream) return;
@@ -207,6 +227,7 @@ const Room = () => {
         roomId = {roomId}
         SpeechRecognition = {SpeechRecognition}
         startListening = {startListening}
+        setMute={setMute}
       />
     </>
 

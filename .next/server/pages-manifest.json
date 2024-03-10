@@ -2,9 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/api/socket": "pages/api/socket.js",
-  "/mangoo": "pages/mangoo.js",
-  "/api/saveData": "pages/api/saveData.js",
-  "/[roomId]": "pages/[roomId].js"
+  "/[roomId]": "pages/[roomId].js",
+  "/": "pages/index.js"
 }

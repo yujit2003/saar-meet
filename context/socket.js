@@ -11,6 +11,7 @@ export const useSocket = () => {
 export const SocketProvider = (props) => {
   const { children } = props;
   const [socket, setSocket] = useState(null);
+  const [transcripts, settranscripts] = useState({});
 
   useEffect(() => {
     const connection = io();
@@ -25,6 +26,6 @@ export const SocketProvider = (props) => {
 
 
   return (
-    <SocketContext.Provider value={socket} >{children}</SocketContext.Provider>
+    <SocketContext.Provider value={socket}  trnscripts = {transcripts}>{children}</SocketContext.Provider>
   );
 };

@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{\"../hooks/usePeer.js -> peerjs\":{\"id\":\"../hooks/usePeer.js -> peerjs\",\"files\":[\"static/chunks/node_modules_peerjs_dist_bundler_mjs.js\"]}}"
+self.__REACT_LOADABLE_MANIFEST="{}"
