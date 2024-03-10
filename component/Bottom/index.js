@@ -12,10 +12,14 @@ const Bottom = (props) => {
     toggleVideo,
     leaveRoom,
     SpeechRecognition,
-    startListening
+    startListening,
+    setMute
   } = props
 
-  
+  const handelClick = () => {
+    SpeechRecognition.stopListening()
+    setMute(true);
+  }
 
   return (
     <div className={styles.bottomMenu}>
@@ -28,7 +32,7 @@ const Bottom = (props) => {
           />
         </button>
       ) : (
-        <button onClick={SpeechRecognition.stopListening}>
+        <button onClick={handelClick}>
           <Mic className={styles.icon} size={55} onClick={toggleAudio} />
         </button>
       )}
