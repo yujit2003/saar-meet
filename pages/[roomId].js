@@ -23,24 +23,23 @@ const Room = () => {
   const { stream } = useMediaStream();
   const startListening = () =>
       SpeechRecognition.startListening({ continuous: true, language: 'en-IN' })
-
+  const [transcripts, setTranscripts] = useState({})
   const {
     transcript,
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition()
 
   useEffect(() => {
-    console.log(transcripts)
-
+    if(!transcript){
+      return ;
+    }
     // Update the transcripts state
     setTranscripts((prevTranscripts) => ({
       ...prevTranscripts,
-      [roomId]: {
-        ...prevTranscripts[roomId],
-        [myId]: transcript,
-      },
-    }))
+      [myId]: transcript
+    }));
   }, [transcript, myId, roomId])
+  console.log(transcripts)
 
   if (!browserSupportsSpeechRecognition) {
     return null
@@ -57,7 +56,25 @@ const Room = () => {
   } = usePlayer(myId, roomId, peer);
 
   const [users, setUsers] = useState([])
-  const [transcripts, setTranscripts] = useState({})
+  const [mute, setMute] = useState(false);
+
+  const handleSaveData = async () => {
+    const response = await fetch('/api/saveData', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ transcripts: transcripts }),
+    });
+};
+
+  useEffect(() => {
+    if(!mute){
+      return;
+    }
+    handleSaveData();
+    setMute(false);
+  }, [mute])
 
   useEffect(() => {
     if (!socket || !peer || !stream) return;
@@ -207,6 +224,7 @@ const Room = () => {
         roomId = {roomId}
         SpeechRecognition = {SpeechRecognition}
         startListening = {startListening}
+        setMute = {setMute}
       />
     </>
 
