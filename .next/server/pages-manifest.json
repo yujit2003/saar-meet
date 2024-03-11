@@ -3,8 +3,6 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/api/socket": "pages/api/socket.js",
-  "/mangoo": "pages/mangoo.js",
-  "/api/saveData": "pages/api/saveData.js",
-  "/[roomId]": "pages/[roomId].js"
+  "/history": "pages/history.js",
+  "/meeting/[id]": "pages/meeting/[id].js"
 }

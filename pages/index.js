@@ -23,8 +23,8 @@ export default function Home() {
     }
   }
 
-  const mangoo=()=>{
-    router.push('/mangoo')
+  const history = () => {
+    router.push('/history')
   }
 
 
@@ -59,8 +59,8 @@ export default function Home() {
                     Create a New Room
                   </button>
 
-                  <button onClick={mangoo} className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg mt-5">
-                    mangoooooooooooo
+                  <button onClick={history} className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg mt-5">
+                    History
                   </button>
                 </div>
                 <img src="/homePageImg.png" alt="" width='500' />
