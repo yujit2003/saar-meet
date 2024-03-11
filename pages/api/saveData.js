@@ -14,11 +14,17 @@ export default async function handler(req, res) {
       const collection = database.collection('my-magic-collection'); // Choose a name for your collection
       
       // Push the transcripts object into the 'transcripts' array field within the document with the specified roomId
-      await collection.updateOne(
-        { roomId },
-        { $push: { transcripts: transcripts } },
-        { upsert: true } // Create a new document if it doesn't exist
-      );
+      if(collection){
+
+        await collection.updateOne(
+          { roomId },
+          { $push: { transcripts: transcripts } },
+          { upsert: true } // Create a new document if it doesn't exist
+          );
+        }else{
+          await collection.insertOne({ roomId, transcripts });
+          res.status(201).json({ message: 'Data saved successfully!' });
+        }
 
       res.status(201).json({ message: 'Data saved successfully!' });
     } catch (error) {

@@ -34,10 +34,9 @@ const Room = () => {
       return ;
     }
     // Update the transcripts state
-    setTranscripts((prevTranscripts) => ({
-      ...prevTranscripts,
-      [myId]: transcript
-    }));
+    setTranscripts(
+      {[myId]: transcript
+    });
   }, [transcript, myId, roomId])
   console.log(transcripts)
 
@@ -79,7 +78,7 @@ const Room = () => {
 const [once, setOnce] = useState(true);
 useEffect(() => {
   if(once){
-    handleGroupIdSaveData();
+    // handleGroupIdSaveData();
   }
   setOnce(false);
 }, [once])
@@ -90,6 +89,7 @@ useEffect(() => {
     }
     handleSaveData();
     setMute(false);
+    setTranscripts({})
   }, [mute])
 
   useEffect(() => {
