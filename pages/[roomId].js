@@ -34,10 +34,9 @@ const Room = () => {
       return ;
     }
     // Update the transcripts state
-    setTranscripts((prevTranscripts) => ({
-      ...prevTranscripts,
-      [myId]: transcript
-    }));
+    setTranscripts(
+      {[myId]: transcript
+    });
   }, [transcript, myId, roomId])
   console.log(transcripts)
 
@@ -64,9 +63,25 @@ const Room = () => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ transcripts: transcripts }),
+        body: JSON.stringify({ transcripts: transcripts, roomId: roomId}),
     });
 };
+  const handleGroupIdSaveData = async () => {
+    const response = await fetch('/api/groupiddb', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ transcripts: transcripts, roomId: roomId}),
+    });
+};
+const [once, setOnce] = useState(true);
+useEffect(() => {
+  if(once){
+    // handleGroupIdSaveData();
+  }
+  setOnce(false);
+}, [once])
 
   useEffect(() => {
     if(!mute){
@@ -74,6 +89,7 @@ const Room = () => {
     }
     handleSaveData();
     setMute(false);
+    setTranscripts({})
   }, [mute])
 
   useEffect(() => {

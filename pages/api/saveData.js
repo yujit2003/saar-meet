@@ -2,7 +2,7 @@ import { MongoClient } from 'mongodb';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const transcripts = req.body; // Access transcripts directly from req.body
+    const { transcripts, roomId } = req.body; // Access transcripts directly from req.body
     const client = new MongoClient(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -13,8 +13,18 @@ export default async function handler(req, res) {
       const database = client.db('my-magic-database'); // Choose a name for your database
       const collection = database.collection('my-magic-collection'); // Choose a name for your collection
       
-      // Insert transcripts directly without nesting
-      await collection.insertOne({transcripts});
+      // Push the transcripts object into the 'transcripts' array field within the document with the specified roomId
+      if(collection){
+
+        await collection.updateOne(
+          { roomId },
+          { $push: { transcripts: transcripts } },
+          { upsert: true } // Create a new document if it doesn't exist
+          );
+        }else{
+          await collection.insertOne({ roomId, transcripts });
+          res.status(201).json({ message: 'Data saved successfully!' });
+        }
 
       res.status(201).json({ message: 'Data saved successfully!' });
     } catch (error) {
