@@ -15,18 +15,24 @@ import CopySection from "@/component/CopySection";
 
 import styles from "@/styles/room.module.css";
 import { useRouter } from "next/router";
-
+import axios from 'axios';
 const Room = () => {
+  const [user, setUser] = useState('')
+  axios.get('/api/username')
+  .then(response => {
+    setUser(response.data.userName)
+  });
   const socket = useSocket();
   const { roomId } = useRouter().query;
   const { peer, myId } = usePeer();
   const { stream } = useMediaStream();
   const startListening = () =>
       SpeechRecognition.startListening({ continuous: true, language: 'en-IN' })
-  const [transcripts, setTranscripts] = useState({})
+  const [transcripts, setTranscripts] = useState('')
   const {
     transcript,
     browserSupportsSpeechRecognition,
+    resetTranscript,
   } = useSpeechRecognition()
 
   useEffect(() => {
@@ -34,11 +40,11 @@ const Room = () => {
       return ;
     }
     // Update the transcripts state
-    setTranscripts(
-      {[myId]: transcript
-    });
+    setTranscripts()
+    setTranscripts([user] + " : " + transcript);
+    console.log(transcripts);
   }, [transcript, myId, roomId])
-  console.log(transcripts)
+  // console.log(transcripts)
 
   if (!browserSupportsSpeechRecognition) {
     return null
@@ -65,31 +71,17 @@ const Room = () => {
         },
         body: JSON.stringify({ transcripts: transcripts, roomId: roomId}),
     });
+    
+    setTranscripts({})
 };
-  const handleGroupIdSaveData = async () => {
-    const response = await fetch('/api/groupiddb', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ transcripts: transcripts, roomId: roomId}),
-    });
-};
-const [once, setOnce] = useState(true);
-useEffect(() => {
-  if(once){
-    // handleGroupIdSaveData();
-  }
-  setOnce(false);
-}, [once])
 
   useEffect(() => {
     if(!mute){
       return;
     }
+    resetTranscript();
+    console.log(transcript); 
     handleSaveData();
-    setMute(false);
-    setTranscripts({})
   }, [mute])
 
   useEffect(() => {

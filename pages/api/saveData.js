@@ -10,16 +10,16 @@ export default async function handler(req, res) {
 
     try {
       await client.connect();
-      const database = client.db('my-magic-database'); // Choose a name for your database
-      const collection = database.collection('my-magic-collection'); // Choose a name for your collection
+      const database = client.db('my-magic-database');
+      const collection = database.collection('my-magic-collection');
       
-      // Push the transcripts object into the 'transcripts' array field within the document with the specified roomId
+      
       if(collection){
 
         await collection.updateOne(
           { roomId },
           { $push: { transcripts: transcripts } },
-          { upsert: true } // Create a new document if it doesn't exist
+          { upsert: true }
           );
         }else{
           await collection.insertOne({ roomId, transcripts });

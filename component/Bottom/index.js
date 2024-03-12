@@ -21,10 +21,15 @@ const Bottom = (props) => {
     setMute(true);
   }
 
+  const handleMuteClick = () => {
+    setMute(false);
+    startListening()
+  }
+
   return (
     <div className={styles.bottomMenu}>
       {muted ? (
-        <button onClick={startListening}>
+        <button onClick={handleMuteClick}>
           <MicOff
             className={cx(styles.icon, styles.active)}
             size={55}
