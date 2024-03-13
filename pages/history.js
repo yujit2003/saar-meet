@@ -30,7 +30,7 @@ export default function MeetingHistory() {
                 {isLoading ? 'Loading...' : 'Refresh'}
             </button>
 
-            {isLoading && <p>Loading...</p>}
+            {/* {isLoading && <p>Loading...</p>} */}
             {!isLoading && meetings.length === 0 && <p className="mt-4">No meetings found.</p>}
             {!isLoading && meetings.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">

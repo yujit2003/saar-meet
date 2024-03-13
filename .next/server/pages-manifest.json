@@ -4,5 +4,6 @@
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
   "/history": "pages/history.js",
+  "/api/transcriptFetch": "pages/api/transcriptFetch.js",
   "/meeting/[id]": "pages/meeting/[id].js"
 }
