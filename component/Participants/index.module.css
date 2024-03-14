@@ -1,0 +1,16 @@
+/* participantCounter.css */
+.participantCount { 
+    position: fixed;
+    bottom: 60px;
+    right: 50px;
+    font-weight: 400;
+    background-color: #000000;
+    border: 1px solid #f8f8f8;
+    color: azure;
+    padding-bottom: 8px;
+    padding-right: 6px;
+    padding-left: 3px;
+    height: 30px;
+    width: 120px;
+    text-align: center;
+  }

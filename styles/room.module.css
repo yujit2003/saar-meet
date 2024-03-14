@@ -1,8 +1,8 @@
 .activePlayerContainer {
   @apply absolute w-9/12 left-0 right-0 mx-auto;
-  top: 20px;
-  bottom: 50px;
-  height: calc(100vh - 60px - 100px);
+  height: 100%;
+  width: 100%;
+  background-color: rgb(9,33,55)
 }
 
 .inActivePlayerContainer {
