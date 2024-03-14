@@ -5,5 +5,9 @@
   "/": "pages/index.js",
   "/history": "pages/history.js",
   "/api/transcriptFetch": "pages/api/transcriptFetch.js",
-  "/meeting/[id]": "pages/meeting/[id].js"
+  "/meeting/[id]": "pages/meeting/[id].js",
+  "/api/username": "pages/api/username.js",
+  "/api/saveData": "pages/api/saveData.js",
+  "/api/generateSummary": "pages/api/generateSummary.js",
+  "/[roomId]": "pages/[roomId].js"
 }

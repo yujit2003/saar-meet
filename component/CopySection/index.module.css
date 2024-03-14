@@ -8,6 +8,20 @@
   .copyDescription {
     @apply flex items-center text-sm text-gray-200 gap-3;
   }
+/* index.module.css */
+
+.copyMessage {
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+  color: white; /* White text color */
+  padding: 5px 10px; /* Adjust padding as needed */
+  border-radius: 5px; /* Rounded corners */
+  position: absolute; /* Position absolute to hover over the copy element */
+  bottom: calc(100% + 5px); /* Position below the copy element */
+  right: 0; /* Position at the left of the copy element */
+  z-index: 999; /* Ensure the message is on top of other content */
+}
+
+/* Other styles for your component */
 
   hr {
     @apply my-1 border-gray-300;

@@ -16,18 +16,19 @@ import CopySection from "@/component/CopySection";
 import styles from "@/styles/room.module.css";
 import { useRouter } from "next/router";
 import axios from 'axios';
+import Participants from "@/component/Participants";
 const Room = () => {
   const [user, setUser] = useState('')
   axios.get('/api/username')
-  .then(response => {
-    setUser(response.data.userName)
-  });
+    .then(response => {
+      setUser(response.data.userName)
+    });
   const socket = useSocket();
   const { roomId } = useRouter().query;
   const { peer, myId } = usePeer();
   const { stream } = useMediaStream();
   const startListening = () =>
-      SpeechRecognition.startListening({ continuous: true, language: 'en-IN' })
+    SpeechRecognition.startListening({ continuous: true, language: 'en-IN' })
   const [transcripts, setTranscripts] = useState('')
   const {
     transcript,
@@ -36,12 +37,12 @@ const Room = () => {
   } = useSpeechRecognition()
 
   useEffect(() => {
-    if(!transcript){
-      return ;
+    if (!transcript) {
+      return;
     }
     // Update the transcripts state
     setTranscripts()
-    setTranscripts([user] + " : " + transcript);
+    setTranscripts([user] + " - " + transcript);
     console.log(transcripts);
   }, [transcript, myId, roomId])
   // console.log(transcripts)
@@ -60,27 +61,29 @@ const Room = () => {
     leaveRoom
   } = usePlayer(myId, roomId, peer);
 
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([]);
   const [mute, setMute] = useState(false);
+  const [newUserCount, setNewUserCount] = useState(1);
 
   const handleSaveData = async () => {
+    if (transcripts.length == 0) { return; }
     const response = await fetch('/api/saveData', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ transcripts: transcripts, roomId: roomId}),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ transcripts: transcripts, roomId: roomId }),
     });
-    
+
     setTranscripts({})
-};
+  };
 
   useEffect(() => {
-    if(!mute){
+    if (!mute) {
       return;
     }
     resetTranscript();
-    console.log(transcript); 
+    console.log(transcript);
     handleSaveData();
   }, [mute])
 
@@ -88,6 +91,8 @@ const Room = () => {
     if (!socket || !peer || !stream) return;
     const handleUserConnected = (newUser) => {
       console.log(`user connected in room with userId ${newUser}`);
+      const k = newUserCount;
+      setNewUserCount(k + 1);
 
       const call = peer.call(newUser, stream);
 
@@ -228,13 +233,17 @@ const Room = () => {
         toggleAudio={toggleAudio}
         toggleVideo={toggleVideo}
         leaveRoom={leaveRoom}
-        playerId = {myId}
-        roomId = {roomId}
-        SpeechRecognition = {SpeechRecognition}
-        startListening = {startListening}
-        setMute = {setMute}
+        playerId={myId}
+        roomId={roomId}
+        SpeechRecognition={SpeechRecognition}
+        startListening={startListening}
+        setMute={setMute}
       />
+
+      <Participants number={newUserCount} />
+
     </>
+
 
   );
 };
